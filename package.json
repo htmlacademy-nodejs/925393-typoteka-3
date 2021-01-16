@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/EKoretsky/925393-typoteka-3/issues"
   },
-  "homepage": "https://github.com/EKoretsky/925393-typoteka-3#readme"
+  "homepage": "https://github.com/EKoretsky/925393-typoteka-3#readme",
+  "devDependencies": {
+    "eslint": "7.18.0",
+    "eslint-config-htmlacademy": "0.6.0"
+  }
 }
