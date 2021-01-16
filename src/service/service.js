@@ -9,14 +9,21 @@ const userArguments = process.argv.slice(USER_ARGV_INDEX);
 const userCommand = userArguments.slice(0, 1);
 const userParam = userArguments.slice(1, 2);
 
-const defaultRun = () => {
-  cli[DEFAULT_COMMAND].run();
-  process.exit(EXIT_CODE.success);
+/**
+ * @param {number} [exitCode]
+ * @param {boolean} [isRunDefault]
+ */
+
+const defaultRun = (isRunDefault = false, exitCode = EXIT_CODE.error) => {
+  if (isRunDefault) {
+    cli[DEFAULT_COMMAND].run();
+  }
+  process.exit(exitCode);
 };
 
 if (userCommand.length === 0) {
   console.log(chalk.yellow(`Ознакомьтесь со справкой и введите необходимую команду для дальнейшей работы.`));
-  defaultRun();
+  defaultRun(true);
 } else if (!cli[userCommand]) {
   console.log(chalk.red(`Такой команды не существует! Ознакомьтесь со справкой.`));
   defaultRun();
