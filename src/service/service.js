@@ -10,10 +10,11 @@ const userCommand = userArguments.slice(0, 1);
 const userParam = userArguments.slice(1, 2);
 
 /**
- * @param {number} [exitCode]
+ * @function
+ * @name defaultRun
  * @param {boolean} [isRunDefault]
+ * @param {number} [exitCode]
  */
-
 const defaultRun = (isRunDefault = false, exitCode = EXIT_CODE.error) => {
   if (isRunDefault) {
     cli[DEFAULT_COMMAND].run();
@@ -23,7 +24,7 @@ const defaultRun = (isRunDefault = false, exitCode = EXIT_CODE.error) => {
 
 if (userCommand.length === 0) {
   console.log(chalk.yellow(`Ознакомьтесь со справкой и введите необходимую команду для дальнейшей работы.`));
-  defaultRun(true);
+  defaultRun(false, EXIT_CODE.success);
 } else if (!cli[userCommand]) {
   console.log(chalk.red(`Такой команды не существует! Ознакомьтесь со справкой.`));
   defaultRun();
