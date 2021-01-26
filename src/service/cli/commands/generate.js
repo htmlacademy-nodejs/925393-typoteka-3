@@ -1,6 +1,6 @@
 "use strict";
 
-const fs = require(`fs`);
+const fs = require(`fs`).promises;
 const path = require(`path`);
 const chalk = require(`chalk`);
 
@@ -41,19 +41,17 @@ const generateOffers = (count) => {
 
 module.exports = {
   name: `--generate`,
-  run(arg) {
+  async run(arg) {
     const [count] = arg;
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT_PUBLICATIONS;
     const content = JSON.stringify(generateOffers(countOffer));
 
-    const pathUploadData = path.join(process.cwd(), `../../${FILE_NAME}`);
-
-    fs.writeFile(pathUploadData, content, (err) => {
-      if (err) {
-        console.log(chalk.red(`Ошибка! Не удалось сгенерировать данные!`));
-      } else {
-        console.log(chalk.green(`Данные успешно сгенерированы!  Файл находиться тут --> ${pathUploadData}`));
-      }
-    });
+    try {
+      const pathUpload = path.join(process.env.NODE_PATH, FILE_NAME);
+      await fs.writeFile(pathUpload, content);
+      console.log(chalk.green(`Данные успешно сгенерированы!  Файл находиться тут --> ${path.resolve(pathUpload)}`));
+    } catch (err) {
+      console.log(chalk.red(`Ошибка! Не удалось сгенерировать данные!`));
+    }
   }
 };

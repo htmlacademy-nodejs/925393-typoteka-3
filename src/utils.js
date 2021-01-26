@@ -30,6 +30,8 @@ const shuffle = (someArray) => {
 };
 
 /**
+ * @function
+ * @name getRandomDate
  * @param {number} countLastMonth
  * @param {Date} [endRangeDate]
  * @return {Date}
@@ -54,4 +56,3 @@ module.exports = {
   shuffle,
   getRandomDate,
 };
-
