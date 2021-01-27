@@ -7,7 +7,6 @@
  * @param {number} max
  * @return {number}
  */
-
 const getRandomInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -20,7 +19,6 @@ const getRandomInt = (min, max) => {
  * @param {Array} someArray
  * @return {Array}
  */
-
 const shuffle = (someArray) => {
   for (let i = someArray.length - 1; i > 0; i--) {
     const randomPosition = Math.floor(Math.random() * i);
@@ -36,7 +34,6 @@ const shuffle = (someArray) => {
  * @param {Date} [endRangeDate]
  * @return {Date}
  */
-
 const getRandomDate = (countLastMonth = 1, endRangeDate = new Date()) => {
   const endMonth = endRangeDate.getUTCMonth();
 
