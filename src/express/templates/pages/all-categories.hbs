@@ -1,0 +1,59 @@
+{{>header-admin}}
+
+<main class="main-page main-page--padding">
+  <section class="main-page__category category">
+    <h1 class="category__title">Категории</h1>
+    <div class="category__add-form">
+      <form action="#" method="POST">
+        <input type="text" name="add-category" id="add-form-add-category" placeholder="Новая категория">
+        <label for="add-form-add-category"><span class="visually-hidden">Добавить категорию</span></label>
+        <button class="category__button button button--category" type="submit">Добавить</button>
+      </form>
+    </div>
+
+    <ul class="category__list">
+      <li class="category__list-item">
+        <form action="#" method="POST">
+          <input type="text" name="category-1" id="modify-form-category-1" value="Жизнь и путешествия">
+          <label for="modify-form-category-1"><span class="visually-hidden">Редактировать категорию</span></label>
+          <button class="category__button button button--category" type="submit">Сохранить</button>
+          <button class="category__button button button--category" type="button">Удалить</button>
+        </form>
+      </li>
+      <li class="category__list-item">
+        <form action="#" method="POST">
+          <input type="text" name="category-2" id="modify-form-category-2" value="Путешествия">
+          <label for="modify-form-category-2"><span class="visually-hidden">Редактировать категорию</span></label>
+          <button class="category__button button button--category" type="submit">Сохранить</button>
+          <button class="category__button button button--category" type="button">Удалить</button>
+        </form>
+      </li>
+      <li class="category__list-item">
+        <form action="#" method="POST">
+          <input type="text" name="category-3" id="modify-form-category-3" value="Дизайн и программирование">
+          <label for="modify-form-category-3"><span class="visually-hidden">Редактировать категорию</span></label>
+          <button class="category__button button button--category" type="submit">Сохранить</button>
+          <button class="category__button button button--category" type="button">Удалить</button>
+        </form>
+      </li>
+      <li class="category__list-item">
+        <form action="#" method="POST">
+          <input type="text" name="category-4" id="modify-form-category-4" value="Другое">
+          <label for="modify-form-category-4"><span class="visually-hidden">Редактировать категорию</span></label>
+          <button class="category__button button button--category" type="submit">Сохранить</button>
+          <button class="category__button button button--category" type="button">Удалить</button>
+        </form>
+      </li>
+      <li class="category__list-item category__list-item--last">
+        <form action="#" method="POST">
+          <input type="text" name="category-5" id="modify-form-category-5" value="Личное">
+          <label for="modify-form-category-5"><span class="visually-hidden">Редактировать категорию</span></label>
+          <button class="category__button button button--category" type="submit">Сохранить</button>
+          <button class="category__button button button--category" type="button">Удалить</button>
+        </form>
+      </li>
+    </ul>
+  </section>
+</main>
+
+{{>footer}}
