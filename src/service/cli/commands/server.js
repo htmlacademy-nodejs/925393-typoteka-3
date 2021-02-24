@@ -1,47 +1,21 @@
 "use strict";
 
-const path = require(`path`);
-const fs = require(`fs`).promises;
-const http = require(`http`);
 const chalk = require(`chalk`);
-const status = require(`http-status-codes`);
+const routes = require(`../routes`);
+const {StatusCodes} = require(`http-status-codes`);
+const express = require(`express`);
 
-const {DEFAULT_PORT, FILE_NAME} = require(`../cli_constants`);
+const {DEFAULT_PORT} = require(`../cli_constants`);
+const app = express();
 
-const sendResponse = (res, statusCode, content) => {
-  const template = `
-     <!Doctype html>
-      <html lang="ru">
-      <head>
-        <title>Учебный проект по Node.js</title>
-      </head>
-      <body>${content}</body>
-    </html>
-  `;
-  res.statusCode = statusCode;
-  res.writeHead(statusCode, {
-    'Content-Type': `text/html; charset=UTF-8`
-  });
-  res.end(template);
-};
+app.use(express.json());
 
-const onClientConnect = async (req, res) => {
-  const notFoundMessageText = `Page Not found`;
+app.use(`/posts`, routes.postsRoute);
 
-  switch (req.url) {
-    case `/`:
-      try {
-        const pathToReadFile = path.join(process.env.NODE_PATH, `${FILE_NAME}`);
-        const fileContent = await fs.readFile(pathToReadFile);
-        const mocks = JSON.parse(fileContent);
+app.use((req, res) => {
+  res.status(StatusCodes.NOT_FOUND).send(`Not found`);
+});
 
-        const content = mocks.map((item) => `<li>${item.title}</li>`).join(``);
-        sendResponse(res, status.OK, `<ul>${content}</ul>`);
-      } catch (err) {
-        sendResponse(res, status.NOT_FOUND, notFoundMessageText);
-      }
-  }
-};
 
 module.exports = {
   name: `--server`,
@@ -50,14 +24,8 @@ module.exports = {
 
     const port = Number.parseInt(userPort, 10) || DEFAULT_PORT;
 
-    http.createServer(onClientConnect)
-      .listen(port)
-      .on(`listening`, (err) => {
-        if (err) {
-          console.error(`Ошибка при создании сервера`, err);
-        } else {
-          console.info(chalk.green(`Ожидаю соединений на ${port}`));
-        }
-      });
+    app.listen(port, () => {
+      console.log(`Сервер принимает подключения на ${chalk.blue(port)})`);
+    });
   }
 };
