@@ -13,7 +13,7 @@ const {
   PATH_TO_DATA,
   MAX_ID_LENGTH,
   MAX_COMMENTS,
-} = require(`../cli_constants`);
+} = require(`../../constants`);
 
 const readContent = async (filePath) => {
   try {

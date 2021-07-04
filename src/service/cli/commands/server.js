@@ -5,7 +5,7 @@ const routes = require(`../routes`);
 const {StatusCodes, getReasonPhrase} = require(`http-status-codes`);
 const express = require(`express`);
 
-const {DEFAULT_PORT} = require(`../cli_constants`);
+const {DEFAULT_PORT} = require(`../../constants`);
 const app = express();
 
 app.use(express.json());
