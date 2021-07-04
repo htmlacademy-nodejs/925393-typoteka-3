@@ -2,7 +2,7 @@
 
 const chalk = require(`chalk`);
 const routes = require(`../routes`);
-const {StatusCodes} = require(`http-status-codes`);
+const {StatusCodes, getReasonPhrase} = require(`http-status-codes`);
 const express = require(`express`);
 
 const {DEFAULT_PORT} = require(`../cli_constants`);
@@ -13,7 +13,9 @@ app.use(express.json());
 app.use(`/posts`, routes.postsRoute);
 
 app.use((req, res) => {
-  res.status(StatusCodes.NOT_FOUND).send(`Not found`);
+  res
+    .status(StatusCodes.NOT_FOUND)
+    .json(getReasonPhrase(StatusCodes.NOT_FOUND));
 });
 
 
