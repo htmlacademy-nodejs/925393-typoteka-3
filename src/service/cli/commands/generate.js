@@ -3,9 +3,17 @@
 const fs = require(`fs`).promises;
 const path = require(`path`);
 const chalk = require(`chalk`);
+const {nanoid} = require(`nanoid`);
 
 const {getRandomInt, shuffle, getRandomDate} = require(`../../../utils`);
-const {DEFAULT_COUNT_PUBLICATIONS, COUNT_LAST_MONTH, FILE_NAME, PATH_TO_DATA} = require(`../cli_constants`);
+const {
+  DEFAULT_COUNT_PUBLICATIONS,
+  COUNT_LAST_MONTH,
+  FILE_NAME,
+  PATH_TO_DATA,
+  MAX_ID_LENGTH,
+  MAX_COMMENTS,
+} = require(`../cli_constants`);
 
 const readContent = async (filePath) => {
   try {
@@ -16,32 +24,55 @@ const readContent = async (filePath) => {
   }
 };
 
-const generateOffers = (count, titles, sentences, categories) => {
+const generateOffers = (count, titles, sentences, categories, comments) => {
   const arr = Array(count).fill({});
+
+  const getTitle = () => {
+    const randomCount = getRandomInt(0, titles.length - 1);
+    return titles[randomCount];
+  };
+
+  const getAnnounce = () => {
+    const randomCount = getRandomInt(1, 5);
+    return shuffle(sentences).slice(0, randomCount).join(` `);
+  };
+
+  const getFullText = () => {
+    const randomCount = getRandomInt(1, sentences.length - 1);
+    return shuffle(sentences).slice(0, randomCount).join(` `);
+  };
+
+  const getCreatedDate = () => {
+    const date = getRandomDate(COUNT_LAST_MONTH);
+    return date.toLocaleString(`ru`);
+  };
+
+  const getCategories = () => {
+    getRandomInt(0, categories.length - 1);
+    const [cat] = shuffle(categories).slice(0, 1);
+    return cat;
+  };
+
+  const getComments = () => {
+    const randomCount = getRandomInt(1, MAX_COMMENTS);
+    const commentsArray = Array(randomCount).fill({});
+    return commentsArray.map(() => ({
+      id: nanoid(MAX_ID_LENGTH),
+      text: shuffle(comments)
+        .slice(0, getRandomInt(1, 3))
+        .join(` `),
+    }));
+  };
 
   return arr.map(() => (
     {
-      get title() {
-        const randomCount = getRandomInt(0, titles.length - 1);
-        return titles[randomCount];
-      },
-      get announce() {
-        const randomCount = getRandomInt(1, 5);
-        return shuffle(sentences).slice(0, randomCount).join(` `);
-      },
-      get fullText() {
-        const randomCount = getRandomInt(1, sentences.length - 1);
-        return shuffle(sentences).slice(0, randomCount).join(` `);
-      },
-      get category() {
-        getRandomInt(0, categories.length - 1);
-        const [cat] = shuffle(categories).slice(0, 1);
-        return cat;
-      },
-      get createdDate() {
-        const date = getRandomDate(COUNT_LAST_MONTH);
-        return date.toLocaleString(`ru`);
-      },
+      id: nanoid(MAX_ID_LENGTH),
+      title: getTitle(),
+      announce: getAnnounce(),
+      fullText: getFullText(),
+      category: getCategories(),
+      createdDate: getCreatedDate(),
+      comments: getComments(),
     }
   ));
 };
@@ -56,7 +87,8 @@ module.exports = {
     const titles = await readContent(PATH_TO_DATA.TITLES);
     const sentences = await readContent(PATH_TO_DATA.SENTENCES);
     const categories = await readContent(PATH_TO_DATA.CATEGORIES);
-    const content = JSON.stringify(generateOffers(countOffer, titles, sentences, categories));
+    const comments = await readContent(PATH_TO_DATA.COMMENTS);
+    const content = JSON.stringify(generateOffers(countOffer, titles, sentences, categories, comments));
 
     try {
       const pathUpload = path.join(process.env.NODE_PATH, FILE_NAME);
@@ -65,5 +97,5 @@ module.exports = {
     } catch (err) {
       console.log(chalk.red(`Ошибка! Не удалось сгенерировать данные!`));
     }
-  }
+  },
 };
