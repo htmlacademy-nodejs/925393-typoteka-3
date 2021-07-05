@@ -1,7 +1,12 @@
 "use strict";
 
 const chalk = require(`chalk`);
-const {DEFAULT_COMMAND, USER_ARGV_INDEX, EXIT_CODE} = require(`./cli/cli_constants`);
+const {
+  DEFAULT_COMMAND,
+  USER_ARGV_INDEX,
+  EXIT_CODE,
+} = require(`./constants`);
+
 const {cli} = require(`./cli`);
 
 const userArguments = process.argv.slice(USER_ARGV_INDEX);
