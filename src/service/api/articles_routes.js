@@ -2,17 +2,26 @@
 
 const Router = require(`express`);
 
-const offersValidator = require(`src/service/middlewares/article_validator`);
+const articleValidator = require(`../middlewares/article_validator`);
+const articleExist = require(`../middlewares/article_exist`);
+const commentsValidator = require(`../middlewares/comments_validator`);
 
 const articleRouter = new Router();
 
-module.exports = (app, controller) => {
+module.exports = function (app, mainController, ...args) {
+  const [commentsController] = args;
   app.use(`/articles`, articleRouter);
 
-  articleRouter.get(`/`, (req, res) => controller.getAll(req, res));
-  articleRouter.get(`/:articleId`, (req, res) => controller.getOne(req, res));
+  articleRouter.get(`/`, mainController.getAll);
+  articleRouter.post(`/`, articleValidator, mainController.create);
 
-  articleRouter.post(`/`, offersValidator, (req, res) => controller.create(req, res));
+  articleRouter.get(`/:articleId`, mainController.getOne);
+  articleRouter.put(`/:articleId`, articleValidator, mainController.update);
+  articleRouter.delete(`/:articleId`, mainController.drop);
+
+  articleRouter.get(`/:articleId/comments`, articleExist(mainController), commentsController.getAll);
+  articleRouter.post(`/:articleId/comments`, [articleExist(mainController), commentsValidator], commentsController.create);
+  articleRouter.delete(`/:articleId/comments/:commentId`, articleExist(mainController), commentsController.drop);
 };
 
 
