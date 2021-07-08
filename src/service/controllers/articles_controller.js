@@ -88,7 +88,7 @@ class ArticlesController {
       const article = this._data.find((item) => item.id === articleId);
 
       if (!article) {
-        sendResponseWithError(res, StatusCodes.NOT_FOUND);
+        return sendResponseWithError(res, StatusCodes.NOT_FOUND);
       }
       this._data = this._data.filter((item) => item.id !== articleId);
       res
@@ -98,6 +98,7 @@ class ArticlesController {
       sendResponseWithError(res);
       console.error(e);
     }
+    return null;
   }
 }
 

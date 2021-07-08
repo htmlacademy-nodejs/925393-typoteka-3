@@ -1,6 +1,7 @@
 "use strict";
 
-const {StatusCodes, getReasonPhrase} = require(`http-status-codes`);
+const {StatusCodes} = require(`http-status-codes`);
+const {sendResponseWithError} = require(`../controllers/controllersUtils`);
 
 module.exports = (controller) => (req, res, next) => {
   try {
@@ -9,16 +10,13 @@ module.exports = (controller) => (req, res, next) => {
     const article = controller.getOne(req, res);
 
     if (!article) {
-      res
-        .status(StatusCodes.NOT_FOUND)
-        .json(getReasonPhrase(StatusCodes.NOT_FOUND));
+      return sendResponseWithError(res, StatusCodes.NOT_FOUND, `статья с таким ID не найдена!`);
     }
     res.locals.article = article;
     next();
   } catch (e) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR));
+    sendResponseWithError(res);
     console.error(e);
   }
+  return null;
 };

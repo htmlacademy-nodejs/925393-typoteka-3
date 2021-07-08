@@ -1,7 +1,8 @@
 "use strict";
 
-const {StatusCodes, getReasonPhrase} = require(`http-status-codes`);
+const {StatusCodes} = require(`http-status-codes`);
 const {ARTICLE_KEYS} = require(`./middlewares_constants`);
+const {sendResponseWithError} = require(`../controllers/controllersUtils`);
 
 module.exports = (req, res, next) => {
   try {
@@ -10,16 +11,13 @@ module.exports = (req, res, next) => {
     const keysExists = ARTICLE_KEYS.every((key) => keys.includes(key));
 
     if (!keysExists) {
-      res
-        .status(StatusCodes.BAD_REQUEST)
-        .json(`Bad request: В объекте запроса определены не все поля`);
+      return sendResponseWithError(res, StatusCodes.BAD_REQUEST, `В теле запроса определены не все поля`);
     }
 
     next();
   } catch (e) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR));
+    sendResponseWithError(res);
     console.error(e);
   }
+  return null;
 };

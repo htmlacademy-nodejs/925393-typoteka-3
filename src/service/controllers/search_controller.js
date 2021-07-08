@@ -16,7 +16,7 @@ class SearchService {
 
       const {query = ``} = req.query;
       if (!query) {
-        sendResponseWithError(res, StatusCodes.BAD_REQUEST);
+        return sendResponseWithError(res, StatusCodes.BAD_REQUEST);
       }
 
       articles.forEach((article) => {
