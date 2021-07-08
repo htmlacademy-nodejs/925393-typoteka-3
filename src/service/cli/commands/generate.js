@@ -24,7 +24,20 @@ const readContent = async (filePath) => {
   }
 };
 
-const generateOffers = (count, titles, sentences, categories, comments) => {
+/**
+ * @function
+ * @name generateOffers
+ * @param {number} count
+ * @param {Object} options
+ * @param {string} options.titles
+ * @param {string} options.sentences
+ * @param {Array} options.categories
+ * @param {string} options.comments
+ * @return {Array}
+ */
+const generateOffers = (count, options) => {
+  const {titles, sentences, categories, comments} = options;
+
   const arr = Array(count).fill({});
 
   const getTitle = () => {
@@ -88,7 +101,12 @@ module.exports = {
     const sentences = await readContent(PATH_TO_DATA.SENTENCES);
     const categories = await readContent(PATH_TO_DATA.CATEGORIES);
     const comments = await readContent(PATH_TO_DATA.COMMENTS);
-    const content = JSON.stringify(generateOffers(countOffer, titles, sentences, categories, comments));
+    const content = JSON.stringify(generateOffers(countOffer, {
+      titles,
+      sentences,
+      categories,
+      comments,
+    }));
 
     try {
       const pathUpload = path.join(process.env.NODE_PATH, FILE_NAME);
