@@ -30,9 +30,9 @@ const readContent = async (filePath) => {
  * @param {number} count
  * @param {Object} options
  * @param {string} options.titles
- * @param {string} options.sentences
+ * @param {Array} options.sentences
  * @param {Array} options.categories
- * @param {string} options.comments
+ * @param {Array} options.comments
  * @return {Array}
  */
 const generateOffers = (count, options) => {

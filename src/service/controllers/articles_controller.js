@@ -35,7 +35,7 @@ class ArticlesController {
       article = this._data.find((item) => item.id === articleId);
 
       if (!article) {
-        sendResponseWithError(res, StatusCodes.NOT_FOUND);
+        return sendResponseWithError(res, StatusCodes.NOT_FOUND);
       }
       if (!isNotResponse) {
         res
