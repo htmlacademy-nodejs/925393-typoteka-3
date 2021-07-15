@@ -20,12 +20,15 @@ class SearchService {
       }
 
       articles.forEach((article) => {
+        const title = article.title.toLowerCase();
 
-        const title = article.title;
-        if (title.indexOf(query) >= 0) {
+        if (title.indexOf(query.toLowerCase()) >= 0) {
           resultArray.push(article);
         }
       });
+      if (resultArray.length === 0) {
+        return sendResponseWithError(res, StatusCodes.NOT_FOUND, `По такому поисковому запросу ничего не найдено`);
+      }
       res
         .status(StatusCodes.OK)
         .json(resultArray);
