@@ -4,7 +4,8 @@
   "description": "Типотека",
   "main": "./src/service/service.js",
   "scripts": {
-    "test": "npm run eslint && jest",
+    "test": "cross-env NODE_PATH=. npm run eslint && jest",
+    "test::rest": "cross-env NODE_PATH=. jest",
     "eslint": "eslint --ext .js src/",
     "start": "cross-env NODE_PATH=. node ./src/service/service.js",
     "server": "cross-env NODE_PATH=. nodemon ./src/service/service.js --server",
