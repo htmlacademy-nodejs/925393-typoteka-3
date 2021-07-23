@@ -87,9 +87,6 @@ class ArticlesController {
       const {articleId} = req.params;
       const article = this._data.find((item) => item.id === articleId);
 
-      if (!article) {
-        return sendResponseWithError(res, StatusCodes.NOT_FOUND);
-      }
       this._data = this._data.filter((item) => item.id !== articleId);
       res
         .status(StatusCodes.OK)
