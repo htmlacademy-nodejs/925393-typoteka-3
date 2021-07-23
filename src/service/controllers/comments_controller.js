@@ -44,8 +44,8 @@ class CommentsController {
   drop(req, res) {
     try {
       const {article} = res.locals;
-      const {commentId} = req.params;
-      const foundComment = article.comments.find((comment) => comment.id === commentId);
+      const {foundComment} = res.locals;
+
       const indexComment = article.comments.indexOf(foundComment);
       const deletedComment = article.comments.splice(indexComment, 1);
       res
