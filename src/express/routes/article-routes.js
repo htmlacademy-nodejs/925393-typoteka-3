@@ -7,7 +7,7 @@ const articleRoutes = new Router();
 articleRoutes.get(`/add`, (req, res) => {
   res.render(`pages/new-post.hbs`);
 });
-articleRoutes.get(`/edit/:id`, (req, res) => console.log(`/articles/edit/:id`));
+articleRoutes.get(`/edit/:id`, (_req, _res) => console.log(`/articles/edit/:id`));
 
 articleRoutes.get(`/category/:id`, (req, res) => {
   res.render(`pages/articles-by-category.hbs`);
