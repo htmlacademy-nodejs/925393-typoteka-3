@@ -17,9 +17,14 @@ exports.EXIT_CODE = {
   success: 0,
 };
 
+exports.ENV = {
+  DEVELOPMENT: `development`,
+  PRODUCTION: `production`
+};
+
 exports.PATH_TO_DATA = {
-  TITLES: path.join(process.env.NODE_PATH, `data`, `titles.txt`),
-  CATEGORIES: path.join(process.env.NODE_PATH, `data`, `categories.txt`),
-  SENTENCES: path.join(process.env.NODE_PATH, `data`, `sentences.txt`),
-  COMMENTS: path.join(process.env.NODE_PATH, `data`, `comments.txt`)
+  TITLES: path.join(`data`, `titles.txt`),
+  CATEGORIES: path.join(`data`, `categories.txt`),
+  SENTENCES: path.join(`data`, `sentences.txt`),
+  COMMENTS: path.join(`data`, `comments.txt`)
 };
