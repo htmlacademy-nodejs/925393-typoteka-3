@@ -16,18 +16,18 @@ class ArticlesController {
     this.drop = this.drop.bind(this);
   }
 
-  getAll(req, res) {
+  getAll(req, res, next) {
     try {
       res
         .status(StatusCodes.OK)
         .json(this._data);
     } catch (e) {
       sendResponseWithError(res);
-      console.error(e);
+      next(e);
     }
   }
 
-  getOne(req, res) {
+  getOne(req, res, next) {
     let article;
     try {
       const {articleId} = req.params;
@@ -44,12 +44,12 @@ class ArticlesController {
       }
     } catch (e) {
       sendResponseWithError(res);
-      console.error(e);
+      next(e);
     }
     return article;
   }
 
-  create(req, res) {
+  create(req, res, next) {
     try {
       const newData = Object.assign({
         id: nanoid(MAX_ID_LENGTH),
@@ -63,11 +63,11 @@ class ArticlesController {
         .json(newData);
     } catch (e) {
       sendResponseWithError(res);
-      console.error(e);
+      next(e);
     }
   }
 
-  update(req, res) {
+  update(req, res, next) {
     try {
       const {articleId} = req.params;
       const oldArticle = this._data.find((item) => item.id === articleId);
@@ -78,11 +78,11 @@ class ArticlesController {
         .json(updatedArticle);
     } catch (e) {
       sendResponseWithError(res);
-      console.error(e);
+      next(e);
     }
   }
 
-  drop(req, res) {
+  drop(req, res, next) {
     try {
       const {articleId} = req.params;
       const article = this._data.find((item) => item.id === articleId);
@@ -93,7 +93,7 @@ class ArticlesController {
         .json(article);
     } catch (e) {
       sendResponseWithError(res);
-      console.error(e);
+      next(e);
     }
     return null;
   }

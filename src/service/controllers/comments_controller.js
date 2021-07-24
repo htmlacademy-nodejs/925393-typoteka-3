@@ -13,7 +13,7 @@ class CommentsController {
     this.create = this.create.bind(this);
   }
 
-  getAll(req, res) {
+  getAll(req, res, next) {
     try {
       const {article} = res.locals;
       res
@@ -21,11 +21,11 @@ class CommentsController {
         .json(article.comments);
     } catch (e) {
       sendResponseWithError(res);
-      console.error(e);
+      next(e);
     }
   }
 
-  create(req, res) {
+  create(req, res, next) {
     try {
       const {article} = res.locals;
       const newComment = Object.assign({
@@ -37,11 +37,11 @@ class CommentsController {
         .json(newComment);
     } catch (e) {
       sendResponseWithError(res);
-      console.error(e);
+      next(e);
     }
   }
 
-  drop(req, res) {
+  drop(req, res, next) {
     try {
       const {article} = res.locals;
       const {foundComment} = res.locals;
@@ -53,7 +53,7 @@ class CommentsController {
         .json(deletedComment);
     } catch (e) {
       sendResponseWithError(res);
-      console.error(e);
+      next(e);
     }
   }
 }

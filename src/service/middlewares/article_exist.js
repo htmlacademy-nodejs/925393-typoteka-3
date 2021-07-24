@@ -16,7 +16,7 @@ module.exports = (controller) => (req, res, next) => {
     next();
   } catch (e) {
     sendResponseWithError(res);
-    console.error(e);
+    next(e);
   }
   return null;
 };

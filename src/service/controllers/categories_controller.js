@@ -8,7 +8,7 @@ class CategoriesController {
     this._data = data;
   }
 
-  getAll(req, res) {
+  getAll(req, res, next) {
     try {
       const categories = this._data.reduce((acc, item) => {
         const category = item.category;
@@ -23,7 +23,7 @@ class CategoriesController {
         .json(arrayCategories);
     } catch (e) {
       sendResponseWithError(res);
-      console.error(e);
+      next(e);
     }
   }
 }
