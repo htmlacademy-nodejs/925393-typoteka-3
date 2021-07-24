@@ -9,7 +9,7 @@ class SearchService {
     this.search = this.search.bind(this);
   }
 
-  search(req, res) {
+  search(req, res, next) {
     const resultArray = [];
     try {
       const articles = this._data;
@@ -34,7 +34,7 @@ class SearchService {
         .json(resultArray);
     } catch (e) {
       sendResponseWithError(res);
-      console.error(e);
+      next(e);
     }
     return resultArray;
   }
